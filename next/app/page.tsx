@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { sendEmail } from "./actions";
 
 export default function Home() {
@@ -33,16 +33,15 @@ export default function Home() {
 	};
 
 	return (
-		<div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+		<div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black h-screen">
 			<main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-center py-32 px-16 bg-white dark:bg-black sm:items-start">
 				<form
 					action={handleAction}
 					className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left"
 				>
 					<h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-						NodeMailer (Next.js)
+						Basic React NodeMailer (Next.js)
 					</h1>
-
 					<div className="w-125">
 						<label
 							htmlFor="email"
@@ -64,7 +63,7 @@ export default function Home() {
 								onChange={(e) => setValue(e.target.value)}
 							/>
 							<button
-								className="absolute inset-e-1.5 bottom-1.5 text-black bg-white hover:bg-brand-strong box-border border border-transparent focus:outline-none focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded text-xs px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:cursor-pointer hover:bg-white/90"
+								className="absolute inset-e-1.5 bottom-1.5 text-black bg-white hover:bg-brand-strong box-border border border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-xs font-medium leading-5 rounded text-xs px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:cursor-pointer hover:bg-white/90"
 								disabled={isPending || seconds > 0}
 							>
 								{isPending ? "Envoi..." : "Envoyer"}

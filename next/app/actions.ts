@@ -21,12 +21,12 @@ export async function sendEmail(formData: FormData) {
 			from: "onboarding@resend.dev",
 			to: [email],
 			subject: "Hello world",
-			react: Email({ firstName: "John", lastName: "Doe" }),
+			react: Email({ firstName: "Pierre", lastName: "Prézelin" }),
 		});
 
 		if (error) return { error: error.message };
 		return { success: true };
 	} catch (e) {
-		return { error: "Erreur serveur." };
+		return { error: "A server crash or network error occurred." };
 	}
 }
