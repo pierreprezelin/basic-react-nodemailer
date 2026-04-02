@@ -1,79 +1,44 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
+import { sendEmail } from "./actions";
 
 export default function Home() {
 	const [value, setValue] = useState<string>("");
-	const [success, setSuccess] = useState<string | null>(null);
-	const [error, setError] = useState<string | null>(null);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-
+	const [status, setStatus] = useState<{ msg: string; type: "success" | "error" | null }>({ msg: "", type: null });
+	const [isPending, startTransition] = useTransition();
 	const [seconds, setSeconds] = useState<number>(0);
-	const [isTimerActive, setIsTimerActive] = useState<boolean>(false);
 
-	useEffect(() => {
-		let interval = undefined;
+	const handleAction = async (formData: FormData) => {
+		startTransition(async () => {
+			const result = await sendEmail(formData);
 
-		if (isTimerActive && seconds > 0) {
-			interval = setInterval(() => {
-				setSeconds((prev) => prev - 1);
-			}, 1000);
-		} else if (seconds === 0) {
-			setIsTimerActive(false);
-			clearInterval(interval);
-			setSuccess(null);
-		}
-		return () => clearInterval(interval);
-	}, [isTimerActive, seconds]);
-
-	const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-	async function handleButtonClick() {
-		setIsLoading(true);
-		setSuccess(null);
-		setError(null);
-
-		if (!regexEmail.test(value)) {
-			setError("Veuillez entrer une adresse email valide.");
-			setIsLoading(false);
-			return;
-		}
-
-		try {
-			const response = await fetch("/api/send", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ email: value.trim() }),
-			});
-
-			const contentType = response.headers.get("content-type");
-			if (!contentType || !contentType.includes("application/json")) {
-				throw new Error("Le serveur n'a pas renvoyé de JSON (vérifiez l'URL /api/send)");
-			}
-
-			const data = await response.json();
-
-			if (response.ok) {
-				setValue("");
-				setSuccess("Email envoyé avec succès !");
-				setSeconds(10);
-				setIsTimerActive(true);
+			if (result?.error) {
+				setStatus({ msg: result.error, type: "error" });
 			} else {
-				throw new Error(data.error || "Une erreur est survenue.");
+				setValue("");
+				setStatus({ msg: "Email envoyé avec succès !", type: "success" });
+				setSeconds(10);
+				const timer = setInterval(() => {
+					setSeconds((prev) => {
+						if (prev <= 1) {
+							clearInterval(timer);
+							setStatus({ msg: "", type: null });
+						}
+						return prev - 1;
+					});
+				}, 1000);
 			}
-		} catch (err: any) {
-			setError(err.message || "Erreur de connexion au serveur.");
-		} finally {
-			setIsLoading(false);
-		}
-	}
+		});
+	};
 
 	return (
 		<div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
 			<main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-center py-32 px-16 bg-white dark:bg-black sm:items-start">
-				<div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
+				<form
+					action={handleAction}
+					className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left"
+				>
 					<h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
 						NodeMailer (Next.js)
 					</h1>
@@ -94,28 +59,26 @@ export default function Home() {
 								value={value}
 								placeholder="john.doe@domain.com"
 								autoComplete="email"
+								disabled={isPending || seconds > 0}
 								required
-								onChange={(e) => setValue(e.currentTarget.value)}
+								onChange={(e) => setValue(e.target.value)}
 							/>
 							<button
 								className="absolute inset-e-1.5 bottom-1.5 text-black bg-white hover:bg-brand-strong box-border border border-transparent focus:outline-none focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded text-xs px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:cursor-pointer hover:bg-white/90"
-								disabled={isLoading || seconds > 0}
-								onClick={handleButtonClick}
+								disabled={isPending || seconds > 0}
 							>
-								{isLoading ? "Envoi..." : "Envoyer"}
+								{isPending ? "Envoi..." : "Envoyer"}
 							</button>
 						</div>
-
+						{status.type === "success" && <p className="mt-2.5 font-medium text-sm text-green-400">{status.msg}</p>}
+						{status.type === "error" && <p className="mt-2.5 font-medium text-sm text-red-400">{status.msg}</p>}
 						{seconds > 0 && (
-							<p className="mt-2.5 font-medium text-sm text-blue-400">
-								Veuillez patienter {seconds} secondes avant d'envoyer un autre email.
+							<p className="font-medium text-sm text-blue-400">
+								Veuillez patienter {seconds}s avant d'envoyer un autre email.
 							</p>
 						)}
-
-						{success && <p className="font-medium text-sm text-green-400">Email envoyé avec succès !</p>}
-						{error && <p className="mt-2.5 font-medium text-sm text-red-400">{error}</p>}
 					</div>
-				</div>
+				</form>
 			</main>
 		</div>
 	);

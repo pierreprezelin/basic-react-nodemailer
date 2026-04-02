@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { Email } from "@/components/email";
+import { regex } from "@/utils/regex";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -9,14 +10,17 @@ export async function POST(req: NextRequest) {
 		const { email } = await req.json();
 
 		if (!email) {
-			return NextResponse.json({ error: "Email is required" }, { status: 400 });
+      return { error: "Email is required." };
+    }
+    if (!regex.email.test(email)) {
+			return { error: "Email must be valid." };
 		}
 
 		const { data, error } = await resend.emails.send({
 			from: "onboarding@resend.dev",
 			to: [email],
 			subject: "Hello world",
-			react: Email({ firstName: "John", lastName: "Doe" }),
+			react: Email({ firstName: "Pierre", lastName: "Prézelin" }),
 		});
 
 		if (error) {
