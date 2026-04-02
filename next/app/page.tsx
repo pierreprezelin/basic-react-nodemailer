@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { sendEmail } from "./actions";
+import { EmailSchema } from "@/lib/schema";
 
 export default function Home() {
 	const [value, setValue] = useState<string>("");
@@ -10,6 +11,16 @@ export default function Home() {
 	const [seconds, setSeconds] = useState<number>(0);
 
 	const handleAction = async (formData: FormData) => {
+		const email = formData.get("email");
+
+		const validation = EmailSchema.safeParse({ email });
+
+		if (!validation.success) {
+			const msg = validation.error.issues[0]?.message || "Le format de l'email est invalide.";
+			setStatus({ msg, type: "error" });
+			return;
+		}
+
 		startTransition(async () => {
 			const result = await sendEmail(formData);
 

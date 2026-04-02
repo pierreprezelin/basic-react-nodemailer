@@ -2,26 +2,29 @@
 
 import { Resend } from "resend";
 import { Email } from "@/components/email";
-import { regex } from "@/utils/regex";
+import { EmailSchema } from "@/lib/schema";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendEmail(formData: FormData) {
-	const email = formData.get("email") as string;
+	const rawEmail = formData.get("email") as string;
+	const validatedFields = EmailSchema.safeParse({ email: rawEmail });
 
-	if (!email) {
+	if (!rawEmail) {
 		return { error: "Une adresse email est requise." };
 	}
-	if (!regex.email.test(email)) {
+	if (!validatedFields.success) {
 		return { error: "Adresse email invalide." };
 	}
+
+	const { email } = validatedFields.data;
 
 	try {
 		const { data, error } = await resend.emails.send({
 			from: "onboarding@resend.dev",
 			to: [email],
 			subject: "Hello world",
-			react: Email({ firstName: "Pierre", lastName: "Prézelin" }),
+			react: Email({ firstName: "John", lastName: "Doe" }),
 		});
 
 		if (error) return { error: error.message };
