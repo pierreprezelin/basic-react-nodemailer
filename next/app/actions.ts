@@ -1,12 +1,25 @@
 "use server";
 
+import { headers } from 'next/headers';
+import { LRUCache } from 'lru-cache';
 import { Resend } from "resend";
 import { Email } from "@/components/email";
 import { EmailSchema } from "@/lib/schema";
 
+const tokenCache = new LRUCache({
+  max: 500,
+  ttl: 1000 * 10, 
+});
+
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendEmail(formData: FormData) {
+	const ip = (await headers()).get("x-forwarded-for") || "anonymous";
+
+	if (tokenCache.has(ip)) {
+    return { error: "Trop de requêtes. Veuillez patienter 10 secondes entre chaque envoi." };
+	}
+	
 	const rawEmail = formData.get("email") as string;
 	const validatedFields = EmailSchema.safeParse({ email: rawEmail });
 
@@ -28,6 +41,7 @@ export async function sendEmail(formData: FormData) {
 		});
 
 		if (error) return { error: error.message };
+		tokenCache.set(ip, true);
 		return { success: true };
 	} catch (e) {
 		return { error: "A server crash or network error occurred." };

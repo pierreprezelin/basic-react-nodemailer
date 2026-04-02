@@ -69,7 +69,6 @@ export default function Home() {
 								value={value}
 								placeholder="john.doe@domain.com"
 								autoComplete="email"
-								disabled={isPending || seconds > 0}
 								required
 								onChange={(e) => setValue(e.target.value)}
 							/>
