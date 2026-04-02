@@ -2,7 +2,7 @@ import express from "express";
 import rateLimit from "express-rate-limit";
 import cors from "cors";
 import { Resend } from "resend";
-import { regex } from "./utils/regex";
+import { EmailSchema } from "./lib/schema";
 
 const app = express();
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -25,21 +25,22 @@ const limiter = rateLimit({
 });
 
 app.post("/api/send", limiter, async (req, res) => {
-	const { email } = req.body;
+	const result = EmailSchema.safeParse(req.body);
 
-	if (!email) {
-		return res.status(400).json({ error: "Une adresse email est requise." });
+	if (!result.success) {
+		return res.status(400).json({
+			error: result.error.issues[0]?.message || "Veuillez entrer une adresse email valide.",
+		});
 	}
-	if (!regex.email.test(email)) {
-		return res.status(400).json({ error: "Adresse email invalide." });
-	}
+
+	const { email } = result.data;
 
 	try {
 		const { data, error } = await resend.emails.send({
 			from: "onboarding@resend.dev",
 			to: [email],
 			subject: "Hello world",
-			html: `<p>Welcome Pierre Prézelin!</p>`,
+			html: `<p>Welcome John Doe!</p>`,
 		});
 
 		if (error) {
