@@ -1,17 +1,19 @@
 # Basic React NodeMailer
 
-A simple setup to send emails from an input with React, Node.js and Resend. As it's for learning purpose, the 3 projects are in the same repository to keep things tidy.
+A simple setup to send emails from an input, with the help of [React](https://react.dev/), [Node.js](https://nodejs.org/) and [Resend](https://resend.com/). As it's for learning purpose, the 3 projects are in the same repository to keep things tidy.
 
 **It features:**
 
-- 2 examples, one with the Next.js API and one with base React and an Node.js/Express server
+- 2 examples, one with the Next.js API and one with base React and an Node.js ([Express](https://expressjs.com/)) server
 - Rate limits to prevent spam (with a timer with for better UX)
-- Schema validation on both client and server-side with Zod
+- Schema validation on both client and server-side with [Zod](https://zod.dev/)
 - Success and error handling, with human-readable messages
 
 ## Setup
 
 **You'll need a Resend account to create your own API keys. Don't forget to create a `.env.local` file at the root of each of the main folders below with `RESEND_API_KEY=<your-key>`.**
+
+All commands are for [Bun](https://bun.com/), but you can use [npm](https://www.npmjs.com/), [yarn](https://yarnpkg.com/) or whatever you want.
 
 ### 📂 next
 
