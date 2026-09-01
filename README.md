@@ -1,13 +1,13 @@
 # Basic React NodeMailer
 
-A basic boilerplate to send emails from an input, with the help of [React](https://react.dev/), [Node.js](https://nodejs.org/) and [Resend](https://resend.com/). Everything is in the same repository to keep things tidy.
+A basic boilerplate to send emails from an input, with the help of [React](https://react.dev/), [Node.js](https://nodejs.org/) and [Resend](https://resend.com/).
 
 **It features:**
 
-- 2 examples, one with the Next.js API and one with base React and a Node.js ([Express](https://expressjs.com/)) server
+- 2 variants: `classic/` (plain REST) and `trpc/` (end-to-end type-safety with [tRPC](https://trpc.io/))
+- 2 examples for each variant, one with the Next.js API and one with base React and a Node.js ([Express](https://expressjs.com/)) server
 - Success and error handling, with human-readable messages
 - Server-side schema validation with [Zod](https://zod.dev/)
-- End-to-end type-safety with [tRPC](https://trpc.io/)
 
 ## Setup
 
@@ -15,7 +15,9 @@ A basic boilerplate to send emails from an input, with the help of [React](https
 
 All commands are for [Bun](https://bun.com/), but you can use your package manager of choice ([npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/fr/), [yarn](https://yarnpkg.com/)...)
 
-### 📂 next
+Each variant (`classic/` and `trpc/`) contains the same 3 folders:
+
+### 📂 nextjs
 
 Using Next.js included API system for an all-in-one implementation:
 
@@ -23,17 +25,17 @@ Using Next.js included API system for an all-in-one implementation:
 2. Run `bun dev`
 3. The server will now run on `localhost:3000`
 
-### 📂 react
+### 📂 client+server/react
 
-Using React in its native form, with React Router and the server in the `node/` folder:
+Using React in its native form, with React Router and the server in the `client+server/node-express/` folder:
 
 1. Install packages with `bun i`
 2. Run `bun dev`
 3. The server will now run on `localhost:5173`
 
-### 📂 node
+### 📂 client+server/node-express
 
-Used for in the `react/` folder to setup a Node.js server with the Express framework:
+Used for in the `client+server/react/` folder to setup a Node.js server with the Express framework:
 
 1. Install packages with `bun i`
 2. Run `bun server.ts`
