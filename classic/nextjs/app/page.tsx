@@ -50,11 +50,11 @@ export default function Home() {
 					action={handleAction}
 					className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left"
 				>
-					<h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-						Basic React NodeMailer (Classic)
-					</h1>
-					<p className="text-black dark:text-zinc-50 mb-[2em]">Next.js</p>
 					<div className="w-125">
+						<h1 className="text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50 mb-[0.5em]">
+							Basic React NodeMailer (Classic)
+						</h1>
+						<p className="text-black dark:text-zinc-50 mb-[2em]">Next.js</p>
 						<label
 							htmlFor="email"
 							className="block mb-2.5 text-sm font-medium text-heading"
