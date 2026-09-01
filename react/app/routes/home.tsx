@@ -40,7 +40,7 @@ export default function Home() {
 		const validation = EmailSchema.safeParse({ email });
 
 		if (!validation.success) {
-			setError(validation.error.issues[0]?.message || "Veuillez entrer une adresse email valide.");
+			setError(validation.error.issues[0]?.message || "Please enter a valid email address.");
 			return;
 		}
 
@@ -56,24 +56,24 @@ export default function Home() {
 
 			const contentType = response.headers.get("content-type");
 			if (!contentType || !contentType.includes("application/json")) {
-				throw new Error("Le serveur n'a pas renvoyé de JSON (vérifiez l'URL /api/send)");
+				throw new Error("Server didn't send any JSON back (check /api/send URL)");
 			}
 
 			const data = await response.json();
 
 			if (response.ok) {
 				setValue("");
-				setSuccess("Email envoyé avec succès !");
+				setSuccess("Email sent successfully!");
 				setSeconds(10);
 				setIsTimerActive(true);
 			} else {
 				if (response.status === 429) {
-					throw new Error("Trop de requêtes. Veuillez réessayer plus tard.");
+					throw new Error("Too many request, please try again later.");
 				}
-				throw new Error(data.error.message || "Une erreur est survenue.");
+				throw new Error(data.error.message || "An error occured.");
 			}
 		} catch (err: any) {
-			setError(err.message || "Erreur de connexion au serveur.");
+			setError(err.message || "Server connection error.");
 		} finally {
 			setIsLoading(false);
 		}
@@ -112,15 +112,13 @@ export default function Home() {
 								className="absolute inset-e-1.5 bottom-1.5 text-black bg-white hover:bg-brand-strong box-border border border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-xs font-medium leading-5 rounded text-xs px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:cursor-pointer hover:bg-white/90"
 								disabled={isLoading || seconds > 0}
 							>
-								{isLoading ? "Envoi..." : "Envoyer"}
+								{isLoading ? "Sending..." : "Send"}
 							</button>
 						</div>
-						{success && <p className="mt-2.5 font-medium text-sm text-green-400">Email envoyé avec succès !</p>}
+						{success && <p className="mt-2.5 font-medium text-sm text-green-400">{success}</p>}
 						{error && <p className="mt-2.5 font-medium text-sm text-red-400">{error}</p>}
 						{seconds > 0 && (
-							<p className="font-medium text-sm text-blue-400">
-								Veuillez patienter {seconds}s avant d'envoyer un autre email.
-							</p>
+							<p className="font-medium text-sm text-blue-400">Please wait {seconds}s before sending another email.</p>
 						)}
 					</div>
 				</form>

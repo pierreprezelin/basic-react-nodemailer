@@ -20,7 +20,7 @@ const limiter = rateLimit({
 	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 	message: {
-		error: "Trop de requêtes. Veuillez patienter 10 secondes entre chaque envoi.",
+		error: "Too many requests. Please wait 10 seconds between each submission.",
 	},
 });
 
@@ -29,7 +29,7 @@ app.post("/api/send", limiter, async (req, res) => {
 
 	if (!result.success) {
 		return res.status(400).json({
-			error: result.error.issues[0]?.message || "Veuillez entrer une adresse email valide.",
+			error: result.error.issues[0]?.message || "Please enter a valid email address.",
 		});
 	}
 
@@ -49,7 +49,7 @@ app.post("/api/send", limiter, async (req, res) => {
 		}
 		res.status(200).json({ success: true, data });
 	} catch (err) {
-		res.status(500).json({ error: "Il semblerait y'a avoir eu une crash serveur ou une erreur réseau." });
+		res.status(500).json({ error: "Server connection error." });
 	}
 });
 

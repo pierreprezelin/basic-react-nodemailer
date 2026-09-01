@@ -16,7 +16,7 @@ export default function Home() {
 		const validation = EmailSchema.safeParse({ email });
 
 		if (!validation.success) {
-			const msg = validation.error.issues[0]?.message || "Le format de l'email est invalide.";
+			const msg = validation.error.issues[0]?.message || "Email format is invalid.";
 			setStatus({ msg, type: "error" });
 			return;
 		}
@@ -28,7 +28,7 @@ export default function Home() {
 				setStatus({ msg: result.error, type: "error" });
 			} else {
 				setValue("");
-				setStatus({ msg: "Email envoyé avec succès !", type: "success" });
+				setStatus({ msg: "Email sent successfully!", type: "success" });
 				setSeconds(10);
 				const timer = setInterval(() => {
 					setSeconds((prev) => {
@@ -76,14 +76,14 @@ export default function Home() {
 								className="absolute inset-e-1.5 bottom-1.5 text-black bg-white hover:bg-brand-strong box-border border border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-xs font-medium leading-5 rounded text-xs px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:cursor-pointer hover:bg-white/90"
 								disabled={isPending || seconds > 0}
 							>
-								{isPending ? "Envoi..." : "Envoyer"}
+								{isPending ? "Sending..." : "Send"}
 							</button>
 						</div>
 						{status.type === "success" && <p className="mt-2.5 font-medium text-sm text-green-400">{status.msg}</p>}
 						{status.type === "error" && <p className="mt-2.5 font-medium text-sm text-red-400">{status.msg}</p>}
 						{seconds > 0 && (
 							<p className="font-medium text-sm text-blue-400">
-								Veuillez patienter {seconds}s avant d&apos;envoyer un autre email.
+								Please wait {seconds}s before sending another email.
 							</p>
 						)}
 					</div>

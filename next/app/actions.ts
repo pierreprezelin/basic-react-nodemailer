@@ -17,17 +17,17 @@ export async function sendEmail(formData: FormData) {
 	const ip = (await headers()).get("x-forwarded-for") || "anonymous";
 
 	if (tokenCache.has(ip)) {
-    return { error: "Trop de requêtes. Veuillez patienter 10 secondes entre chaque envoi." };
+    return { error: "Too many request. Please wait 10 seconds between each submit." };
 	}
 	
 	const rawEmail = formData.get("email") as string;
 	const validatedFields = EmailSchema.safeParse({ email: rawEmail });
 
 	if (!rawEmail) {
-		return { error: "Une adresse email est requise." };
+		return { error: "An email address is required." };
 	}
 	if (!validatedFields.success) {
-		return { error: "Adresse email invalide." };
+		return { error: "Email format is invalid." };
 	}
 
 	const { email } = validatedFields.data;
