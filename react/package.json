@@ -1,5 +1,6 @@
 {
-  "name": "",
+  "name": "react",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,24 +10,24 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
-    "@react-router/node": "7.13.2",
-    "@react-router/serve": "7.13.2",
-    "isbot": "^5.1.36",
-    "lodash-es": "^4.17.23",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "react-router": "7.13.2",
-    "zod": "^4.3.6"
+    "@react-router/node": "^8.3.1",
+    "@react-router/serve": "^8.3.1",
+    "isbot": "^5.2.2",
+    "lodash-es": "^4.18.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router": "^8.3.1",
+    "zod": "^4.5.2"
   },
   "devDependencies": {
-    "@react-router/dev": "7.13.2",
-    "@tailwindcss/vite": "^4.2.2",
-    "@types/node": "^22",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "tailwindcss": "^4.2.2",
+    "@react-router/dev": "^8.3.1",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^26.4.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
+    "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3",
-    "vite": "^7.1.7",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite": "^8.2.2",
+    "vite-tsconfig-paths": "^6.1.1"
   }
 }
