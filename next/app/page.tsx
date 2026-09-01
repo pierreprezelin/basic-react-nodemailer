@@ -40,10 +40,11 @@ export default function Home() {
 					action={handleAction}
 					className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left"
 				>
-					<h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-						Basic React NodeMailer (Next.js)
-					</h1>
 					<div className="w-125">
+						<h1 className="text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50 mb-[0.5em]">
+							Basic React NodeMailer
+						</h1>
+						<p className="text-black dark:text-zinc-50 mb-[2em]">(Next.js · tRPC)</p>
 						<label
 							htmlFor="email"
 							className="block mb-2.5 text-sm font-medium text-heading"
@@ -55,7 +56,7 @@ export default function Home() {
 								type="email"
 								id="email"
 								name="email"
-								className="block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder:text-body disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+								className="block w-full p-3 font- border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder:text-body disabled:opacity-50 disabled:cursor-not-allowed transition-all"
 								value={value}
 								placeholder="john.doe@domain.com"
 								autoComplete="email"
