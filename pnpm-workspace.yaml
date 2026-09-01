@@ -1,0 +1,5 @@
+packages:
+  - "classic/nextjs"
+  - "classic/client+server/*"
+  - "trpc/nextjs"
+  - "trpc/client+server/*"

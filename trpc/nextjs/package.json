@@ -1,5 +1,5 @@
 {
-  "name": "next",
+  "name": "trpc-nextjs",
   "version": "1.0.0",
   "private": true,
   "scripts": {

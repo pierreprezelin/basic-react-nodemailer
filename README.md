@@ -15,6 +15,8 @@ A basic boilerplate to send emails from an input, with the help of [React](https
 
 All commands are for [Bun](https://bun.com/), but you can use your package manager of choice ([npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/fr/), [yarn](https://yarnpkg.com/)...)
 
+The repo is a workspace: run `bun i` once at the root to install every sub-project's packages in a single command.
+
 Each variant (`classic/` and `trpc/`) contains the same 3 folders:
 
 ### 📂 nextjs

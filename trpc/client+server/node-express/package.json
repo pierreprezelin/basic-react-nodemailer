@@ -1,9 +1,9 @@
 {
-  "name": "node",
+  "name": "trpc-node-express",
   "version": "1.0.0",
+  "private": true,
   "module": "index.ts",
   "type": "module",
-  "private": true,
   "dependencies": {
     "@trpc/server": "^11.18.0",
     "cors": "^2.8.6",
