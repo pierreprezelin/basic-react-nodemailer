@@ -1,5 +1,5 @@
 import { createTRPCClient, httpBatchLink, TRPCClientError } from "@trpc/client";
-import type { AppRouter } from "../../node/router";
+import type { AppRouter } from "../../node-express/router";
 
 export const trpc = createTRPCClient<AppRouter>({
 	links: [httpBatchLink({ url: "http://localhost:5001/trpc" })],
