@@ -33,6 +33,7 @@ export async function sendEmail(formData: FormData) {
 	const { email } = validatedFields.data;
 
 	try {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const { data, error } = await resend.emails.send({
 			from: "onboarding@resend.dev",
 			to: [email],
@@ -44,6 +45,6 @@ export async function sendEmail(formData: FormData) {
 		tokenCache.set(ip, true);
 		return { success: true };
 	} catch (e) {
-		return { error: "A server crash or network error occurred." };
+		return { error: `A server crash or network error occurred: ${e}` };
 	}
 }

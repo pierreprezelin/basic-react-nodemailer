@@ -83,7 +83,7 @@ export default function Home() {
 						{status.type === "error" && <p className="mt-2.5 font-medium text-sm text-red-400">{status.msg}</p>}
 						{seconds > 0 && (
 							<p className="font-medium text-sm text-blue-400">
-								Veuillez patienter {seconds}s avant d'envoyer un autre email.
+								Veuillez patienter {seconds}s avant d&apos;envoyer un autre email.
 							</p>
 						)}
 					</div>
