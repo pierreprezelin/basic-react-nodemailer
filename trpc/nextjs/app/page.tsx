@@ -42,9 +42,9 @@ export default function Home() {
 				>
 					<div className="w-125">
 						<h1 className="text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50 mb-[0.5em]">
-							Basic React NodeMailer
+							Basic React NodeMailer (tRPC)
 						</h1>
-						<p className="text-black dark:text-zinc-50 mb-[2em]">(Next.js · tRPC)</p>
+						<p className="text-black dark:text-zinc-50 mb-[2em]">Next.js</p>
 						<label
 							htmlFor="email"
 							className="block mb-2.5 text-sm font-medium text-heading"
