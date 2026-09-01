@@ -1,4 +1,4 @@
-import express from "express";
+import express, { type Request, type Response } from "express";
 import rateLimit from "express-rate-limit";
 import cors from "cors";
 import { Resend } from "resend";
@@ -24,7 +24,7 @@ const limiter = rateLimit({
 	},
 });
 
-app.post("/api/send", limiter, async (req, res) => {
+app.post("/api/send", limiter, async (req: Request, res: Response) => {
 	const result = EmailSchema.safeParse(req.body);
 
 	if (!result.success) {
@@ -45,7 +45,7 @@ app.post("/api/send", limiter, async (req, res) => {
 
 		if (error) {
 			console.error("Resend Error:", error);
-			return res.status(error.statusCode).json({ success: false, error });
+			return res.status(error.statusCode ?? 500).json({ success: false, error });
 		}
 		res.status(200).json({ success: true, data });
 	} catch (err) {
