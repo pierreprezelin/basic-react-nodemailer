@@ -5,9 +5,8 @@ A basic boilerplate to send emails from an input, with the help of [React](https
 **It features:**
 
 - 2 examples, one with the Next.js API and one with base React and a Node.js ([Express](https://expressjs.com/)) server
-- Rate limits to prevent spam (with a timer with for better UX)
 - Success and error handling, with human-readable messages
-- End-to-end schema validation with [Zod](https://zod.dev/)
+- Server-side schema validation with [Zod](https://zod.dev/)
 - End-to-end type-safety with [tRPC](https://trpc.io/)
 
 ## Setup
@@ -37,5 +36,5 @@ Using React in its native form, with React Router and the server in the `node/` 
 Used for in the `react/` folder to setup a Node.js server with the Express framework:
 
 1. Install packages with `bun i`
-2. Run `bun server.js`
+2. Run `bun server.ts`
 3. The server will now run on `localhost:5001`

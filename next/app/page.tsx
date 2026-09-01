@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { sendEmail } from "./actions";
-import { EmailSchema } from "@/lib/schema";
+import { getErrorMessage, trpc } from "@/lib/trpc";
 
 export default function Home() {
 	const [value, setValue] = useState<string>("");
@@ -11,22 +10,11 @@ export default function Home() {
 	const [seconds, setSeconds] = useState<number>(0);
 
 	const handleAction = async (formData: FormData) => {
-		const email = formData.get("email");
-
-		const validation = EmailSchema.safeParse({ email });
-
-		if (!validation.success) {
-			const msg = validation.error.issues[0]?.message || "Email format is invalid.";
-			setStatus({ msg, type: "error" });
-			return;
-		}
+		const email = String(formData.get("email") ?? "").trim();
 
 		startTransition(async () => {
-			const result = await sendEmail(formData);
-
-			if (result?.error) {
-				setStatus({ msg: result.error, type: "error" });
-			} else {
+			try {
+				await trpc.sendEmail.mutate({ email });
 				setValue("");
 				setStatus({ msg: "Email sent successfully!", type: "success" });
 				setSeconds(10);
@@ -39,6 +27,8 @@ export default function Home() {
 						return prev - 1;
 					});
 				}, 1000);
+			} catch (err) {
+				setStatus({ msg: getErrorMessage(err, "A server crash or network error occurred."), type: "error" });
 			}
 		});
 	};
